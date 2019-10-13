@@ -65,7 +65,7 @@ public class Main {
             StringBuffer testingSuits = new StringBuffer();
             testingSuits.append("<suite name=\"MyRobot Test Suite\">");
             testingSuits.append("\n\t<listeners>");
-            testingSuits.append("\n\t\t<listener class-name=\"com.bvcps.ddes.myrobot.listeners.RobotListener\"/>");
+            testingSuits.append("\n\t\t<listener class-name=\"com.myrobot.listeners.RobotListener\"/>");
             //testingSuits.append("\n\t\t<listener class-name=\"org.uncommons.reportng.HTMLReporter\"/>");
             //testingSuits.append("\n\t\t<listener class-name=\"org.uncommons.reportng.JUnitXMLReporter\"/>");
             testingSuits.append("\n\t</listeners>");
