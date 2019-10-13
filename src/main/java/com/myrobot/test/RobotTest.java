@@ -5,15 +5,14 @@
  */
 package com.myrobot.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.testng.annotations.Test;
+
 import com.myrobot.model.RoboTask;
 import com.myrobot.model.RoboTest;
 import com.myrobot.utils.WebUtil;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import org.testng.annotations.Test;
 
 /**
  * This class extends RobotBase, it means it has all the RoboTest information

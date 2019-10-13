@@ -6,22 +6,36 @@
 package com.myrobot.utils;
 
 import java.io.File;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Set;
+import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.function.Function;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.myrobot.model.RoboTask;
+
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
+//import io.appium.java_client.android.nativekey.AndroidKey;
+//import io.appium.java_client.android.nativekey.KeyEvent;
+//import io.appium.java_client.android.nativekey.KeyEventMetaModifier;
+import io.appium.java_client.android.nativekey.KeyEventMetaModifier;
 
 /**
  * This class contains utility methods to perform common tasks on browser by
@@ -73,6 +87,31 @@ public class WebUtil {
         return result;
     }
     
+
+    /**
+     * Wait for element to draw
+     * @param webDriver Pass web driver
+     * @param element Element 
+     * @param timoutSec In seconds
+     * @param pollingSec In milliseconds
+     * @return Return web element
+     */
+    public static void fluientWaitforElement(WebDriver webDriver, String by, String id, int timoutSec, int pollingSec) {
+        FluentWait<WebDriver> fWait = new FluentWait<WebDriver>(webDriver)
+        	.withTimeout(Duration.of(timoutSec, ChronoUnit.SECONDS))
+            .pollingEvery(Duration.of(pollingSec, ChronoUnit.MILLIS))
+            .ignoring(NoSuchElementException.class, TimeoutException.class)
+            .ignoring(StaleElementReferenceException.class, org.openqa.selenium.NoSuchElementException.class);
+        for (int i = 0; i < 2; i++) {
+            try {
+                //fWait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("")));
+	            fWait.until(ExpectedConditions.visibilityOfElementLocated(getBy(by, id)));
+	            fWait.until(ExpectedConditions.elementToBeClickable(getBy(by, id)));
+            } catch (Exception e) {
+            }
+        }
+    }
+    
     /**
      * This method takes web driver object, by information and element id and
      * returns selected element. If element not exits throws exception.
@@ -87,7 +126,8 @@ public class WebUtil {
         WebElement result = webDriver.findElement(byId);
         return result;
     }
-
+    
+    
     /**
      * This method takes web driver object, by information and element id and
      * returns list of selected element. If element not exits throws exception.
@@ -118,7 +158,9 @@ public class WebUtil {
             WebElement webElement,
             String action,
             String data) throws Exception {
-        Object ob = null;
+    	@SuppressWarnings("rawtypes")
+		AndroidDriver androidDriver = (webDriver instanceof AndroidDriver)?(AndroidDriver)webDriver:null;
+    	Object ob = null;
         if(null == action) {
             return ob;
         }
@@ -141,6 +183,24 @@ public class WebUtil {
         }
         else if(action.equalsIgnoreCase("clear")) {
             webElement.clear();
+        }
+        else if(null != androidDriver && action.equalsIgnoreCase("tap")) {
+        }
+        else if(null != androidDriver && action.equalsIgnoreCase("presskey")) {
+        	//androidDriver.pressKeyCode(Integer.parseInt(data));
+        	androidDriver.pressKey(new KeyEvent(AndroidKey.valueOf(data)));
+        }
+        else if(null != androidDriver && action.equalsIgnoreCase("presskeymeta")) {
+        	//androidDriver.pressKeyCode(Integer.parseInt(data.split("-")[0]), new Integer(data.split("-")[0]));
+        	androidDriver.pressKey(new KeyEvent(AndroidKey.valueOf(data.split("-")[0])).withMetaModifier(KeyEventMetaModifier.valueOf(data.split("-")[1])));
+        }
+        else if(null != androidDriver && action.equalsIgnoreCase("longpresskey")) {
+        	//androidDriver.longPressKeyCode(Integer.parseInt(data));
+        	androidDriver.longPressKey(new KeyEvent(AndroidKey.valueOf(data)));
+        }
+        else if(null != androidDriver && action.equalsIgnoreCase("longpresskeymeta")) {
+        	//androidDriver.longPressKeyCode(Integer.parseInt(data.split("-")[0]), new Integer(data.split("-")[0]));
+        	androidDriver.longPressKey(new KeyEvent(AndroidKey.valueOf(data.split("-")[0])).withMetaModifier(KeyEventMetaModifier.valueOf(data.split("-")[1])));
         }
         else if(action.equalsIgnoreCase("click")) {
             webElement.click();
@@ -175,6 +235,10 @@ public class WebUtil {
         else if(action.equalsIgnoreCase("clear_sendkeys")) {
             webElement.clear();
             webElement.sendKeys(data);
+        }
+        else if(action.equalsIgnoreCase("clear_sendkeys_password")) {
+        	androidDriver.pressKey(new KeyEvent(AndroidKey.valueOf("S")));
+        	androidDriver.pressKey(new KeyEvent(AndroidKey.valueOf("S")));
         }
         else if(action.equalsIgnoreCase("switch_to_frame")) {
             webDriver.switchTo().frame(webElement);
@@ -338,20 +402,10 @@ public class WebUtil {
         if(null == expectedCondition) {
             waitTime = "60";
         }
-        WebDriverWait webDriverWait = new WebDriverWait(webDriver, Integer.parseInt(waitTime));
-        if(null != expectedCondition && expectedCondition.equalsIgnoreCase("util_visible")) {
-            if(null == waitSelectBy || "".equals(waitSelectBy)) {
-                waitSelectBy = by;
-            }
-            if(null == waitElementId || "".equals(waitElementId)) {
-                waitElementId = id;
-            }
-            WebElement waitWebElement = getElement(webDriver, waitSelectBy, waitElementId);
-            webDriverWait.until(ExpectedConditions.visibilityOf(waitWebElement));
-        }
-        else {
-            webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(getBy(waitSelectBy, waitElementId)));
-        }
+        //WebDriverWait webDriverWait = new WebDriverWait(webDriver, Integer.parseInt(waitTime));
+        waitSelectBy = (null == waitSelectBy || "".equals(waitSelectBy))?by:waitSelectBy;
+        waitElementId = (null == waitElementId || "".equals(waitElementId))?id:waitElementId;
+        fluientWaitforElement(webDriver, waitSelectBy, waitElementId, Integer.parseInt(waitTime), 1000);
         WebElement webElement = getElement(webDriver, by, id);
         ob = performAction(webDriver, webElement, action, data);
         return ob;

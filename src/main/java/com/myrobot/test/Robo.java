@@ -6,8 +6,8 @@
 package com.myrobot.test;
 
 import org.apache.log4j.Logger;
-import org.junit.AfterClass;
 import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 import com.myrobot.model.RoboTest;

@@ -5,11 +5,6 @@
  */
 package com.myrobot.main;
 
-import com.myrobot.listeners.RobotListener;
-import com.myrobot.model.RoboSuit;
-import com.myrobot.model.RoboTest;
-import com.myrobot.utils.ExcelUtil;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,13 +17,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+
 import org.apache.log4j.Logger;
 import org.testng.TestNG;
 import org.testng.reporters.Files;
+
+import com.myrobot.listeners.RobotListener;
+import com.myrobot.model.RoboSuit;
+import com.myrobot.model.RoboTest;
+import com.myrobot.test.RobotTest;
+import com.myrobot.utils.ExcelUtil;
 
 /**
  * This class is entry point of MyRobot application. Application enters in
@@ -58,7 +61,7 @@ public class Main {
             File resources = new File(home.getAbsolutePath() + "/src/main/resources");
             Properties prop = new Properties();
             prop.load(new FileInputStream(resources.getAbsolutePath() + "/application.properties"));
-            for(Map.Entry entry:prop.entrySet()) {
+            for(Map.Entry<Object, Object> entry:prop.entrySet()) {
                 System.setProperty(entry.getKey().toString(), entry.getValue().toString());
             } 
             List<RoboSuit> inputSuitList = ExcelUtil.scanSuits(System.getProperty("input.excel.dir"));
@@ -103,7 +106,19 @@ public class Main {
             List<String> suitList = new ArrayList<String>();
             suitList.add(resources.getAbsolutePath() + "/testing.xml");
             runner.setTestSuites(suitList);
-            runner.run();
+            
+            /**
+             * Run through TestNG
+             */
+            //runner.run();
+            
+            /**
+             * Manual run
+             */
+            RobotTest robotTest = new RobotTest();
+            robotTest.handlerMethod("S01", "T01");
+            robotTest.test();
+            
             
             java.nio.file.Files.walkFileTree(Paths.get(resources.getAbsolutePath()), new SimpleFileVisitor<Path>() {
                 @Override

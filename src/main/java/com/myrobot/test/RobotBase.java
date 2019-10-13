@@ -33,10 +33,14 @@ public class RobotBase extends Robot {
      */
     @BeforeTest
     public void beforeTest(final ITestContext testContext) throws Exception {
-        RoboSuit suit = null;
-        RoboTest test = null;
         String suitName = testContext.getSuite().getName();
         String testName = testContext.getName();
+        handlerMethod(suitName, testName);
+    }
+
+    public void handlerMethod(String suitName, String testName) throws Exception {
+        RoboSuit suit = null;
+        RoboTest test = null;
         List<RoboSuit> suitList = RoboSuit.getRoboSuitList();
         if(null == suitList || suitList.size() <= 0) {
             throw new Exception("There is no suit available to execute");
@@ -72,7 +76,7 @@ public class RobotBase extends Robot {
         }
         this.test = test;
     }
-
+    
     /**
      * After advice for Test
      */
