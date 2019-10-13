@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bvcps.ddes.myrobot.main;
+package com.myrobot.main;
 
-import com.bvcps.ddes.myrobot.listeners.RobotListener;
-import com.bvcps.ddes.myrobot.model.RoboSuit;
-import com.bvcps.ddes.myrobot.model.RoboTest;
-import com.bvcps.ddes.myrobot.utils.ExcelUtil;
+import com.myrobot.listeners.RobotListener;
+import com.myrobot.model.RoboSuit;
+import com.myrobot.model.RoboTest;
+import com.myrobot.utils.ExcelUtil;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;

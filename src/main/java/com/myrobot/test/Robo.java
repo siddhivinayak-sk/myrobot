@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bvcps.ddes.myrobot.test;
+package com.myrobot.test;
 
-import com.bvcps.ddes.myrobot.model.RoboTest;
 import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
+
+import com.myrobot.model.RoboTest;
 
 /**
  * This is the super class for Test. It contains driver information and RoboTest

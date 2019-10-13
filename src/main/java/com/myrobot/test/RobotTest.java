@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bvcps.ddes.myrobot.test;
+package com.myrobot.test;
 
-import com.bvcps.ddes.myrobot.model.RoboTask;
-import com.bvcps.ddes.myrobot.model.RoboTest;
-import com.bvcps.ddes.myrobot.utils.WebUtil;
+import com.myrobot.model.RoboTask;
+import com.myrobot.model.RoboTest;
+import com.myrobot.utils.WebUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

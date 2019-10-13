@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bvcps.ddes.myrobot.test;
+package com.myrobot.test;
 
-import com.bvcps.ddes.myrobot.model.RoboSuit;
-import com.bvcps.ddes.myrobot.model.RoboTest;
-import com.bvcps.ddes.myrobot.utils.ExcelUtil;
-import com.bvcps.ddes.myrobot.utils.LoadDriver;
+import com.myrobot.model.RoboSuit;
+import com.myrobot.model.RoboTest;
+import com.myrobot.utils.ExcelUtil;
+import com.myrobot.utils.LoadDriver;
+
 import java.util.List;
 import org.testng.ITestContext;
 import org.testng.ITestResult;

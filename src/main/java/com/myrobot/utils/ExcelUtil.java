@@ -3,11 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bvcps.ddes.myrobot.utils;
+package com.myrobot.utils;
 
-import com.bvcps.ddes.myrobot.model.RoboSuit;
-import com.bvcps.ddes.myrobot.model.RoboTask;
-import com.bvcps.ddes.myrobot.model.RoboTest;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -30,6 +27,10 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.myrobot.model.RoboSuit;
+import com.myrobot.model.RoboTask;
+import com.myrobot.model.RoboTest;
 
 /**
  * This is a class containing utility methods for excel reading and writing

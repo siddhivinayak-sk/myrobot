@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bvcps.ddes.myrobot.utils;
+package com.myrobot.utils;
 
-import com.bvcps.ddes.myrobot.model.RoboTask;
 import java.io.File;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +20,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.myrobot.model.RoboTask;
 
 /**
  * This class contains utility methods to perform common tasks on browser by
