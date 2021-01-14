@@ -13,7 +13,7 @@
         <seleniumhq>3.12.0</seleniumhq>
         <htmlunit-driver>2.23</htmlunit-driver>
         <testng>6.8.8</testng>
-        <poi>3.7</poi>
+        <poi>4.1.2</poi>
         <saxon>8.7</saxon>
         <java-client>6.1.0</java-client>
 
